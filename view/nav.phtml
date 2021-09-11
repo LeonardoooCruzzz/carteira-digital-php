@@ -1,0 +1,72 @@
+<nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+    <div class="container-fluid h4 mb-0 text-white ">
+        <div class="texto">
+            <a class="link">Página</a> | <?php echo $page_nome?></div>
+        <ul class="navbar-nav align-items-center d-none d-md-flex">
+            <li class="nav-item dropdown">
+                <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false">
+                    <div class="media align-items-center">
+                        <span class="avatar avatar-sm rounded-circle">
+                            <img src="<?php echo BASE_SITE_UPLOADS .'/perfil/large/perfil.jpg'?>" alt="Foto do perfil"/>
+                        </span>
+                        <?php
+                        date_default_timezone_set('America/Sao_Paulo');
+                        if (date('H') >= 6 && date('H') < 12){
+                            $saudacao = 'Bom Dia';
+                        }else if (date('H') >= 12 && date('H') < 18){
+                            $saudacao = 'Boa Tarde';
+                        }else {
+                            $saudacao = 'Boa Noite';
+                        }
+                        session_start();
+                        ?>
+                        <div class="media-body ml-2 d-none d-lg-block">
+                            <span class="mb-0 text-sm  font-weight-bold"><?php echo $saudacao .' | '.$_SESSION['login']?></span>
+                        </div>
+                    </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                    <div class=" dropdown-header noti-title">
+                        <h6 class="text-overflow m-0">Olá!</h6>
+                    </div>
+                    <a href="<?php echo URL_SITE .'/usuario-form?id='.$_SESSION['id_registro']?>" class="dropdown-item">
+                        <i class="fas fa-user icone text-info "></i>
+                        <span>Meu perfil</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" id="sair">
+                        <i class="fas fa-ban icone text-red"></i>
+                        <span>Sair</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row">
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card card-stats mb-4 mb-xl-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Transferências</h5>
+                                    <span class="h2 font-weight-bold mb-0">0</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-info text-white rounded-circle shadow vendas"></div>
+                                </div>
+                            </div>
+                            <p class="mt-3 mb-0 text-muted text-sm">
+                                <span class="text-nowrap">Quantidade de Transferências feitas</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

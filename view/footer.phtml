@@ -1,0 +1,25 @@
+<?php if ($page_id != 'login' && $page_id != 'cadastro'){?>
+    <footer class="footer">
+        <div class="row align-items-center justify-content-xl-between">
+            <div class="col-xl-12">
+                <div class="copyright text-center  text-muted">
+                    © <?php echo date('Y')?> Todos os direitos reservados<br />Desenvolvido por: Leonardo Cruz
+              </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+    </div>
+<?php }?>
+</body>
+<script  type="text/javascript" src="<?php echo BASE_SITE_JS ?>/jquery.min.js"></script>
+<script  type="text/javascript" src="<?php echo BASE_SITE_JS ?>/fontawesome.min.js"></script>
+<script  type="text/javascript" src="<?php echo BASE_SITE_JS ?>/case_js.min.js"></script>
+<?php foreach ($case_js as $js){?>
+    <script  type="text/javascript" src="<?php echo BASE_SITE_JS .'/'.$js?>"></script>
+<?php }?>
+<script  type="text/javascript" src="<?php echo BASE_SITE_JS ?>/index.js"></script>
+<script type="application/javascript">
+    var url_padrao = '<?php echo URL_SITE?>'
+</script>
+</html>

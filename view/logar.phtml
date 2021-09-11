@@ -1,0 +1,67 @@
+<?php
+$page_id = 'login';
+$cadastro = new Usuario(true);
+$usuario_conectado = explode(',',$_COOKIE['usuario_conectado']);
+
+$case_css = array();
+$case_js = array();
+include_once ('header.phtml');
+?>
+    <div class="container mt--5 pb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7">
+                <div class="card bg-secondary shadow border-0">
+                    <div class="card-header bg-transparent">
+                        <div class="text-center redes-sociais">
+                            <a href="https://www.linkedin.com/in/leonardocruz-"target="_blank"  class="linkedin icon"></a>
+                        </div>
+                    </div>
+                    <div class="card-body px-lg-5 py-lg-4">
+                        <div class="text-center text-muted mb-4">
+                            <small>Preencha abaixo com suas credenciais.</small><br>
+                        </div>
+                        <form id="login" method="POST" action="">
+                            <div class="form-group">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-envelope icone"></i></span>
+                                    </div>
+                                    <input class="form-control" name="email" id="email" placeholder="E-mail" type="email"
+                                           value="<?php echo ($usuario_conectado[0]) ? $usuario_conectado[0] : ''?>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-key icone"></i></span>
+                                    </div>
+                                    <input class="form-control" name="senha" id="senha" placeholder="Senha" type="password"
+                                           value="<?php echo ($usuario_conectado[1]) ? $usuario_conectado[1] : ''?>">
+                                    <span id="vizualizar_senha" class="icon"></span>
+                                </div>
+                            </div>
+                            <div class="custom-control custom-control-alternative custom-checkbox">
+                                <input class="custom-control-input" name="manter_conectado" id="manter_conectado" type="checkbox">
+                                <label class="custom-control-label" for="manter_conectado">
+                                    <span class="text-muted">Me manter contectado</span>
+                                </label>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary my-4">Logar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 text-right redireciona">
+                        <a href="<?php echo URL_SITE .'/cadastro'?>" class="link">
+                            <small>CADASTRE-SE</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php
+include_once ('footer.phtml');
+?>

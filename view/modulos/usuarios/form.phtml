@@ -1,0 +1,139 @@
+<?php
+$page_id = 'usuario';
+$page_url = 'usuario';
+$table = 'usuarios';
+$table_id = 'id_usuario';
+$page_nome = 'Usuários';
+$gets = new Usuario(true);
+$registro = $_GET['id'];
+if ($registro != ''){
+    $gets->setTable($table);
+    $gets->setTableId($table_id);
+    $gets->setIdTable($registro);
+    $info = $gets->getRegistros();
+    if($info[0]->tipo_pessoa == 'F'){
+       $dados =  $gets->buscaRegistroPessoaFisica($registro);
+       $info[0]->cpf = $dados[0]->cpf;
+    } else {
+        $dados =  $gets->buscaRegistroPessoaJuridica($registro);
+        $info[0]->cnpj = $dados[0]->cnpj;
+        $info[0]->razao_social = $dados[0]->razao_social;
+    }
+}
+$case_css = array();
+$case_js = array('jquery.mask.js');
+include_once('view/header.phtml');
+?>
+<div class="main-content">
+    <?php include_once 'view/nav.phtml' ?>
+    <div class="container-fluid mt--7">
+        <div class="row">
+            <div class="col-xl-12 order-xl-1">
+                <div class="card bg-secondary shadow">
+                    <?php if ($_GET['msg'] == 'ok') { ?>
+                        <div id="avisos" class="text-center success">
+                            Salvo com sucesso
+                        </div>
+                    <?php } else if ($_GET['msg'] == 'erro') { ?>
+                        <div id="avisos" class="text-center error">
+                            Erro ao salvar dados, tente novamente.
+                        </div>
+                    <?php } ?>
+                    <div class="card-header bg-white border-0">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0"><?php echo $page_nome?></h3>
+                            </div>
+                            <div class="col-4 text-right">
+                                <a href="<?php echo URL_SITE .'/'.$page_url.'-lista'?>" class="btn btn-sm btn-primary">Voltar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form id="form_adm" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="acao" id="acao" value="alterar" />
+                            <h6 class="heading-small text-muted mb-4">Informações Do Cadastro</h6>
+                            <div class="row">
+                                <div class="col-xl-3">
+                                    <div class="form-group focused">
+                                        <label class="form-control-label" for="tipo_pessoa">Tipo de pessoa</label>
+                                        <select class="form-control opcional" readonly="readonly" id="tipo_pessoa" name="tipo_pessoa">
+                                            <?php if ($_SESSION['tipo_pessoa'] == 'F') {?>
+                                                <option value="F">Pessoa Fisíca</option>
+                                            <?php } else {?>
+                                                <option value="J">Pessoa Jurídica</option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <?php if ($_SESSION['tipo_pessoa'] == 'F') { ?>
+                                    <div class="col-xl-3">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="cpf">CPF</label>
+                                            <input type="text" name="cpf" id="cpf"
+                                                   class="form-control form-control-alternative"
+                                                   value="<?php echo utf8_encode($info[0]->cpf) ?>">
+                                        </div>
+                                    </div>
+                                <?php } else { ?>
+                                    <div class="col-xl-3">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="cnpj">CNPJ</label>
+                                            <input type="text" name="cnpj" id="cnpj"
+                                                   class="form-control form-control-alternative"
+                                                   value="<?php echo utf8_encode($info[0]->cnpj)?>" >
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="razao_social">Razão Social</label>
+                                            <input type="text" name="razao_social" id="razao_social"
+                                                   class="form-control form-control-alternative"
+                                                   value="<?php echo utf8_encode($info[0]->razao_social)?>" >
+                                        </div>
+                                    </div>
+                                <?php }?>
+                                <div class="clearfix"></div>
+                                <div class="col-xl-6">
+                                    <div class="form-group focused">
+                                        <label class="form-control-label" for="nome_completo">Nome</label>
+                                        <input type="text" name="nome_completo" id="nome_completo"
+                                               class="form-control form-control-alternative"
+                                               value="<?php echo utf8_encode($info[0]->nome)?>" >
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group focused">
+                                        <label class="form-control-label" for="input-email">E-mail</label>
+                                        <input type="email" name="email" id="input-email"
+                                               class="form-control form-control-alternative" placeholder="Email"
+                                               value="<?php echo $info[0]->email?>" >
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <label class="form-control-label" for="input-password">Senha</label>
+                                    <div class="form-group">
+                                        <input type="password" name="senha" id="senha"
+                                               class="form-control form-control-alternative opcional" placeholder="Redifinir senha" value="">
+                                        <span id="vizualizar_senha" class="icon"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-success mt-4">Salvar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    include_once('view/footer.phtml');
+    ?>
+        <script type="application/javascript">
+            $('#cep').mask('00000-000');
+            $('#cpf').mask('000.000.000-00', {reverse: true});
+            $('#cnpj').mask('00.000.000/0000-00', {reverse: true});
+        </script>

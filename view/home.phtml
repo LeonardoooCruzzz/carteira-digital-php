@@ -1,0 +1,27 @@
+<?php
+$page_id = 'home';
+$page_nome = 'Painel';
+$case_css = array('');
+$case_js = array();
+include_once('header.phtml');
+?>
+    <div class="main-content">
+        <?php include_once 'nav.phtml'; ?>
+            <div class="container-fluid <?php ($_SESSION['id_registro'] != 1) ? 'mt--7' :''?>">
+                <?php ?>
+                <div class="row mt-5">
+                    <div class="col-xl-12 mb-5 mb-xl-0">
+                        <div class="card shadow">
+                            <div class="card-header border-0">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h3 class="mb-0">Bem vindo a carteira digital</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<?php
+include_once('footer.phtml');
+?>

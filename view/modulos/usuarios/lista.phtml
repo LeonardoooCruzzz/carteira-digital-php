@@ -1,0 +1,89 @@
+<?php
+$page_id = 'usuario';
+$page_url = 'usuario';
+$table = 'usuario';
+$page_nome = 'Usuários';
+$url_destino = 'usuario';
+$usuarios = new Usuario(true);
+
+$usuario = $usuarios->buscaRegistro($_SESSION['id_registro']);
+
+$case_css = array('datatables.min.css', 'fontawesome.min.css');
+$case_js = array('datatables.min.js', 'fontawesome.min.js');
+
+$array_nomes = array(
+    'Nome',
+    'E-mail',
+    'Data do Cadastro',
+);
+include_once('view/header.phtml');
+?>
+<div class="main-content">
+    <?php include_once 'view/nav.phtml' ?>
+<div class="container-fluid mt--7">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0"><?php echo $page_nome?></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <div class="col-12">
+                        <table id="dtBasicExample" class="table table-striped table-bordered table-sm"
+                               cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <?php foreach ($array_nomes as $n_m) { ?>
+                                    <th scope="th-sm"><?php echo $n_m ?></th>
+                                <?php } ?>
+                                <th scope="th-sm">Editar</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            if ($usuario) {
+                                foreach ($usuario as $u_s){?>
+                                <tr>
+                                    <td><?php echo utf8_encode($u_s->nome)?></td>
+                                    <td>
+                                        <a href="mailto:<?php echo $u_s->email?>"><?php echo $u_s->email?></a>
+                                    </td>
+                                    <td ><?php echo $u_s->data_hora?></td>
+                                    <td class="text-right">
+                                        <div id="button_redirect">
+                                            <i class="icon redirect"></i>
+                                            <div id="editar" class="centro">
+                                                <a class="dropdown-item editar"
+                                                   href="<?php echo URL_SITE . '/' . $page_url . '-form?id=' . $u_s->id_usuario ?>">Editar</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php }
+                            } else{?>
+                                <tr>
+                                    <td colspan="3" class="text-center nulo">Não contém nenhum registro cadastro
+                                        ainda
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+    include_once('view/footer.phtml');
+    ?>
+    <script type="text/javascript">
+        $('#dtBasicExample').DataTable({
+            "order": [[ 0, "desc" ]]
+        });
+        $('.dataTables_length').addClass('bs-select');
+    </script>

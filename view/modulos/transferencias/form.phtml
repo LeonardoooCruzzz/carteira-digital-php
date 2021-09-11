@@ -1,0 +1,69 @@
+<?php
+$page_id = 'transferencias';
+$page_url = 'transferencias';
+$table = 'transferencias';
+$table_id = 'id_transferencia';
+$page_nome = 'Transferências';
+$gets = new Transferencia(true);
+$registro = $_GET['id'];
+if ($registro != ''){
+    $gets->setTable($table);
+    $gets->setTableId($table_id);
+    $gets->setIdTable($registro);
+    $info = $gets->getRegistros();
+    $combos = $gets->listaCombosPedidos($registro);
+    $produtos = $gets->listaProdutosPedidos($registro);
+}
+$case_css = array();
+$case_js = array('jquery.mask.js');
+include_once('view/header.phtml');
+?>
+<div class="main-content">
+    <?php include_once 'view/nav.phtml' ?>
+    <div class="container-fluid mt--7">
+        <div class="row">
+            <div class="col-xl-12 order-xl-1">
+                <div class="card bg-secondary shadow">
+                    <?php if ($_GET['msg'] == 'ok') { ?>
+                        <div id="avisos" class="text-center success">
+                            Salvo com sucesso
+                        </div>
+                    <?php } else if ($_GET['msg'] == 'erro') { ?>
+                        <div id="avisos" class="text-center error">
+                            Erro ao salvar dados, tente novamente.
+                        </div>
+                    <?php } ?>
+                    <div class="card-header bg-white border-0">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0"><?php echo $page_nome?></h3>
+                            </div>
+                            <div class="col-4 text-right">
+                                <a href="<?php echo URL_SITE .'/'.$page_url.'-lista'?>" class="btn btn-sm btn-primary">Voltar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form id="form_adm" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="acao" id="acao" value="<?php echo  ($registro != '') ? 'alterar' : 'incluir'?>" />
+                            <h6 class="heading-small text-muted mb-4"></h6>
+                            <div class="row">
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    include_once('view/footer.phtml');
+    ?>
+        <script type="text/javascript">
+            $('#imprimir').on('click', function () {
+               var conteudo = document.getElementById('imprimir_pedido').innerHTML,
+                   imprimir = window.open('');
+               imprimir.document.write(conteudo);
+               imprimir.window.print();
+               imprimir.window.close();
+            });
+        </script>

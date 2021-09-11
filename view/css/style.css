@@ -1,0 +1,283 @@
+.fullWidth {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: inherit;
+}
+.container {
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: inherit;
+}
+.no-padding {padding: 0!important;}
+.left, .right { margin: 0; padding: 0; }
+body {height: auto;}
+.clear {clear: both;}
+::-webkit-input-placeholder {color: inherit;}
+:-moz-placeholder {color: inherit;}
+::-moz-placeholder {color: inherit;}
+:-ms-input-placeholder {color: inherit;}
+.overflow{overflow: hidden;}
+a,button,input,select{outline: #000;}
+input[readonly='readonly'] {background-color: #ced4da!important;}
+select, input, textarea,a, button{outline: #000;}
+.position-center{display: flex;flex-flow: column;justify-content: center;align-content: center;}
+.position_center_grid{display:flex;flex-flow: row wrap;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}
+.icon,#form_mensagem div.mensagem span.mensagem:before,
+#button_redirect #editar .dropdown-item:before{background-image: url("../images/icons.png");background-repeat: no-repeat;}
+form .erro span:before,#form_mensagem div.mensagem span.mensagem:before,span.erro span:before,#button_redirect #editar .dropdown-item:before{content: '';}
+html, body,span.erro{font-family: 'Roboto-Regular';}
+.card-title,h3,.btn-primary,.card .thead-light th,ul.navbar-nav .nav-link,h6{font-family: 'Roboto-Bold';}
+.redes-sociais a,#button_redirect #editar .dropdown-item:before{display: inline-block;vertical-align: middle;}
+.clearfix{width: 100%;}
+#loading{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	border-left: solid 4px #ec001f;border-right: solid 4px #ec001f;
+	height: 100%;
+	z-index: 999;
+	background-color: #fff;
+	transition: top 1s;
+}
+#informativo .form-control-label .link{word-wrap: break-word;}
+#loading.ativo{display: flex;}
+#loading.not{top: 100%;}
+#loading img{max-width: 60%;margin: 0px auto;}
+#vizualizar_senha{
+    position: absolute;
+    top: 11px;
+    right: 17px;
+    width: 24px;
+    height: 24px;
+    background-position: 0px 0px;
+    cursor: pointer;
+	z-index: 9;
+    display: none;
+}
+#vizualizar_senha.ativo{background-position: -30px 0px;}
+.redes-sociais {margin-top: 15px;}
+.redes-sociais a{
+	width: 24px;
+	height: 26px;
+	margin-right: 10px;
+	transition: opacity .3s;
+}
+.redes-sociais a:hover{opacity: 0.6;}
+.redes-sociais a.linkedin{background-position: 0px -24px;margin-right: 0px;}
+.redes-sociais a.whatsapp{height: 26px;background-position: -36px -24px;}
+.redes-sociais a.instagram{height: 27px;background-position: -70px -24px;}
+#carregar,#form_mensagem{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    background: rgba(255,255,255,0.9);
+}
+#carregar,#form_mensagem{display: none;}
+#carregar img{max-width: 4%;margin: 0px auto;}
+#carregar.ativo,#form_mensagem.ativo{display: flex;}
+input{color: #8898aa!important;}
+.null{display: none;}
+.form-group{position: relative;}
+span.erro{
+	position: absolute;
+	bottom: -19px;
+	left: 0;
+    z-index: 99;
+    font-family: 'Roboto-Regular';
+    font-weight: bold;
+	font-size: 12px;
+    background-color: #5F6273;
+    padding: 1px 15px;
+    color: #fff;
+    border-radius: 50px;
+}
+span.erro span{position: relative;}
+span.erro span:before{
+    position: absolute;
+    top: -5px;
+    left: 14px;
+    border-right: solid 10px transparent;
+    border-bottom: solid 5px #5F6273;
+    border-left: solid 10px transparent;
+}
+#form_mensagem div.mensagem{width: 40%;margin: 0px auto;}
+#form_mensagem div.mensagem span{
+    display: inline-block;
+    font-family: 'Montserrat-Bold';
+    font-size: 16px;
+    color: #8898aa;
+}
+#form_mensagem div.mensagem span.mensagem:before{
+    display: block;
+    width: 32px;
+    height: 32px;
+    margin: 0px auto 20px;
+}
+#form_mensagem div.mensagem.success span.mensagem:before{background-position: 1px -59px;}
+#form_mensagem div.mensagem.error span.mensagem:before{background-position: -41px -60px;}
+#form_mensagem div.mensagem span.button{
+    font-family: 'Montserrat-Bold';
+    font-size: 9px;
+    text-transform: uppercase;
+    background-color: #0df923;
+    color: #fff;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 10px 20px;
+    transition: opacity .3s;
+    cursor: pointer;
+}
+#form_mensagem div.mensagem span.button:hover{opacity: .6;}
+#form_mensagem div.mensagem.error span.button{background-color: #e2574c;}
+.navbar-horizontal .navbar-nav .nav-link .nav-link-inner--text{font-family: 'Montserrat-Bold';font-size: 14px}
+p.texto{font-family: 'Roboto-Regular';font-size: 14px}
+.navbar-vertical.navbar-expand-md .navbar-nav .nav-link{font-weight: bold;}
+.icon-shape.acesso{background-position: 9px -115px;}
+.icon-shape.empresa{background-position: -75px -114px;}
+.icon-shape.produtos{background-position: -167px -114px;}
+.icon-shape.vendas{background-position: -248px -114px;}
+.card-body .text-nowrap{font-size: 12px;}
+ul.navbar-nav .icon{
+    display: inline-block;
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+ul.navbar-nav .icon.painel{background-position: 0px -160px;}
+ul.navbar-nav .icon.usuario{background-position: -37px -162px;}
+ul.navbar-nav .icon.informativo{background-position: 0px -201px;}
+ul.navbar-nav .icon.agenda{background-position: -133px -201px;}
+ul.navbar-nav .icon.empresas{background-position: -88px -201px;}
+ul.navbar-nav .icon.produtos{background-position: -48px -201px;}
+ul.navbar-nav .icon.vendas{background-position: -173px -201px;}
+ul.navbar-nav .icon.orcamento{background-position: -220px -202px;}
+#button_redirect{
+    position: relative;
+    display: inline-block;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+#button_redirect .redirect{
+    display: block;
+    width: 25px;
+    height: 24px;
+    margin: 0px 0px 0px auto ;
+    background-position: -81px -164px;
+    cursor: pointer;
+}
+#button_redirect #editar{
+    font-size: 1rem;
+    position: absolute;
+    z-index: 1000;
+    top: -100%;
+    left: 0;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    margin: .125rem 0 0;
+    padding: .5rem 0;
+    list-style: none;
+    text-align: left;
+    color: #525f7f;
+    border: 0 solid rgba(0, 0, 0, .15);
+    border-radius: .4375rem;
+    background-color: #fff;
+    background-clip: padding-box;
+    box-shadow: 0 50px 100px rgba(50, 50, 93, .1), 0 15px 35px rgba(50, 50, 93, .15), 0 5px 15px rgba(0, 0, 0, .1);
+}
+#button_redirect #editar.centro{top: -50%;}
+#button_redirect #editar .dropdown-item{font-family: 'Roboto-Bold';font-size: 12px;color: #a9aaaa;cursor: pointer;}
+#button_redirect #editar .dropdown-item:before{
+    width: 19px;
+    height: 17px;
+    margin-right: 5px;
+}
+#button_redirect #editar .dropdown-item.editar:before{background-position: -136px -163px;}
+#button_redirect #editar .dropdown-item.deletar:before{width: 15px;height:20px;background-position: -184px -163px;}
+#button_redirect #editar.ativo{
+    display: block;
+    position: absolute;
+    will-change: transform;
+    transform: translate3d(-175px, 2px, 0px);
+}
+#sair{cursor: pointer;}
+#foto_perfil{display: none;}#cadastro .perfil{margin: 0px!important;background-color: #00FF00!important;border: none!important;}
+#form_adm .perfil{margin: 0px!important;}
+.main-content .bg-secondary{border: none;}
+.main-content .bg-secondary #avisos{
+    font-family: 'Roboto-Bold';
+    font-size: 16px;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+.main-content .bg-secondary #avisos.success{background-color: #00FF00;}
+.main-content .bg-secondary #avisos.error{background: linear-gradient(87deg,#5F6273 0,#5F6273 100%);}
+.table-flush tbody tr td.nulo{ font-family: 'Montserrat-Bold';font-size: 12px;color: #8898aa;}
+#vendas #add_produto{margin-top: 2rem!important;width: 100%;background-color: #11CDEF;border-color: #11CDEF;}
+#vendas #lista h6{margin: 0px!important;}
+#vendas #lista #deletar span{
+    display: block;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    background-position: 0px -244px;
+}
+div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item.active .page-link:focus{background-color: #5F6273!important;}
+.mobile_view,.mobile_view_lc{display: none!important;}
+.checkbox {
+    display: block;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 0px;
+    cursor: pointer;
+    font-family: "Josefin Sans",sans-serif;
+    font-size: 18px;
+    line-height: 24px;
+    color: #2f2d4e;
+}
+.checkbox input {position: absolute; opacity: 0; cursor: pointer; height: 0;width: 0;}
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    border-radius: 5px;
+    background-color: #eee;
+}
+.checkbox:hover input ~ .checkmark {background-color: #ccc;}
+.checkbox input:checked ~ .checkmark {background-color: #EC1F24;}
+.checkmark:after { content: "";position: absolute; display: none;}
+.checkbox input:checked ~ .checkmark:after {display: block;}
+.checkbox .checkmark:after {
+    left: 8px;
+    top: 4px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.redireciona .link {
+    font-family: 'Roboto-Bold';
+    font-size: 16px;
+    font-weight: bold;
+    transition: opacity .3s;
+}
+.redireciona .link:hover{opacity: .7;}
+#login h1, #cadastro h1{margin-bottom: 50px;}
+@media (max-width: 1024px) {
+    .desktop_view{display: none!important;}
+    .mobile_view{display: block!important;}
+    .mobile_view_lc{display: inline-block!important;}
+    #informativo .form-control-label{display: block;}
+}

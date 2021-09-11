@@ -1,0 +1,121 @@
+<?php
+$page_id = 'cadastro';
+$cadastro = new Usuario(true);
+$case_css = array();
+$case_js = array('jquery.mask.js');
+include_once ('header.phtml');
+?>
+    <div class="container mt--5 pb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-7">
+                <div class="card bg-secondary shadow border-0">
+                    <div class="card-header bg-transparent">
+                        <div class="text-center redes-sociais">
+                            <a href="https://www.linkedin.com/in/leonardocruz-"target="_blank"  class="linkedin icon"></a>
+                        </div>
+                    </div>
+                    <div class="card-body px-lg-5 py-lg-4">
+                        <div class="text-center text-muted mb-4">
+                            <small>Preencha abaixo com suas credenciais.</small><br>
+                        </div>
+                        <form id="cadastro" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="far fa-user icone"></i></span>
+                                    </div>
+                                    <select class="form-control" id="tipo_pessoa" name="tipo_pessoa">
+                                        <option value="F">Pessoa Fisíca - Comuns</option>
+                                        <option value="J">Pessoa Jurídica - Lojistas</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="far fa-user icone"></i></span>
+                                            </div>
+                                            <input type="text" id="nome_completo" placeholder="Nome Completo"
+                                                   name="nome_completo" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-envelope icone"></i></span>
+                                            </div>
+                                            <input type="email" id="email" placeholder="E-mail"
+                                                   name="email" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-key icone"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="CPF" id="cpf"
+                                                   name="cpf">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group null">
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-key icone"></i></span>
+                                            </div>
+                                            <input type="text" placeholder="CNPJ" class="form-control opcional"
+                                                   id="cnpj" name="cnpj">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group null">
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-key icone"></i></span>
+                                            </div>
+                                            <input type="text" placeholder="Razão Social" id="razao_social" name="razao_social"
+                                                   class="form-control opcional">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-key icone"></i></span>
+                                    </div>
+                                    <input type="password" id="senha" name="senha_cadastro" class="form-control" placeholder="Senha">
+                                    <span id="vizualizar_senha" class="icon"></span>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary my-4">Cadastra-se</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 text-right redireciona">
+                        <a href="<?php echo URL_SITE ?>" class="link">
+                            <small>LOGAR</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php
+include_once ('footer.phtml');
+?>

@@ -1,0 +1,63 @@
+@font-face {
+    font-family: 'Montserrat-Light';
+    src: url('./fonts/Montserrat-Light.eot');
+    src: url('./fonts/Montserrat-Light.eot?#iefix') format('embedded-opentype'),
+        url('./fonts/Montserrat-Light.woff2') format('woff2'),
+        url('./fonts/Montserrat-Light.woff') format('woff'),
+        url('./fonts/Montserrat-Light.ttf') format('truetype'),
+        url('./fonts/Montserrat-Light.svg#Montserrat-Light') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}@font-face {
+    font-family: 'Roboto-Regular';
+    src: url('./fonts/Roboto-Regular.eot');
+    src: url('./fonts/Roboto-Regular.eot?#iefix') format('embedded-opentype'),
+        url('./fonts/Roboto-Regular.woff2') format('woff2'),
+        url('./fonts/Roboto-Regular.woff') format('woff'),
+        url('./fonts/Roboto-Regular.ttf') format('truetype'),
+        url('./fonts/Roboto-Regular.svg#Roboto-Regular') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}@font-face {
+    font-family: 'Roboto-Bold';
+    src: url('./fonts/Roboto-Bold.eot');
+    src: url('./fonts/Roboto-Bold.eot?#iefix') format('embedded-opentype'),
+        url('./fonts/Roboto-Bold.woff2') format('woff2'),
+        url('./fonts/Roboto-Bold.woff') format('woff'),
+        url('./fonts/Roboto-Bold.ttf') format('truetype'),
+        url('./fonts/Roboto-Bold.svg#Roboto-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}@font-face {
+    font-family: 'CooperBlack';
+    src: url('./fonts/CooperBlack.eot');
+    src: url('./fonts/CooperBlack.eot?#iefix') format('embedded-opentype'),
+        url('./fonts/CooperBlack.woff2') format('woff2'),
+        url('./fonts/CooperBlack.woff') format('woff'),
+        url('./fonts/CooperBlack.ttf') format('truetype'),
+        url('./fonts/CooperBlack.svg#CooperBlack') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}@font-face {
+    font-family: 'fontawesome-webfont';
+    src: url('./fonts/fontawesome-webfont.eot');
+    src: url('./fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
+        url('./fonts/fontawesome-webfont.woff') format('woff'),
+        url('./fonts/fontawesome-webfont.ttf') format('truetype'),
+        url('./fonts/fontawesome-webfont.svg#fontawesome-webfont') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Montserrat-Bold';
+    src: url('./fonts/Montserrat-Bold.eot');
+    src: url('./fonts/Montserrat-Bold.eot?#iefix') format('embedded-opentype'),
+        url('./fonts/Montserrat-Bold.woff2') format('woff2'),
+        url('./fonts/Montserrat-Bold.woff') format('woff'),
+        url('./fonts/Montserrat-Light.ttf') format('truetype'),
+        url('./fonts/Montserrat-Light.svg#Montserrat-Light') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+
