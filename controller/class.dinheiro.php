@@ -24,4 +24,9 @@ class Dinheiro extends ModelDinheiro
     {
         return parent::updateDinheiro($idUsuario, $valor);
     }
+
+    public function saldoAtualizado($idUsuario)
+    {
+        return parent::saldoAtualizado($idUsuario);
+    }
 }

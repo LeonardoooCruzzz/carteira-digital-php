@@ -44,7 +44,22 @@ class ModelDinheiro extends sets
         $sql = "UPDATE ".$this->table." 
         SET  valor = '" . $valor . "'
         WHERE id_usuario = " . $idUsuario;
+
         $execute_into = conexao::toConnect()->executeQuery($sql);
+        if (count($execute_into) > 0) {
+            return $execute_into;
+        }else{
+            return false;
+        }
+    }
+
+    /*
+     * author: Leonardo Cruz
+     * Busca saldo atual
+     * */
+    protected function saldoAtualizado($idUsuario){
+        $sql = "SELECT * FROM " . $this->table . " WHERE id_usuario = " . $idUsuario;
+        $execute_into = conexao::toConnect()->executeS($sql);
         if (count($execute_into) > 0) {
             return $execute_into;
         }else{

@@ -185,4 +185,23 @@ class ModelUsuario extends sets
             return false;
         }
     }
+
+    /*
+     * author: Leonardo Cruz
+     * verifica se usuário existe para transferir o dinheiro na conta dele
+     * */
+    protected function verificaUsuarioTransferencia($email){
+        $sql = "SELECT DISTINCT u.*,CASE WHEN u.tipo_pessoa = 'J' THEN uj.cnpj ELSE uf.cpf END AS 'identificacao', ud.valor
+        FROM `".$this->table."` u
+        LEFT JOIN `".$this->table."_pessoa_fisica` uf ON u.`id_usuario` = uf.`id_usuario`
+        LEFT JOIN `".$this->table."_pessoa_juridica` uj ON u.`id_usuario` = uj.`id_usuario`
+        INNER JOIN `usuarios_dinheiro` ud ON u.`id_usuario` = ud.`id_usuario`
+        WHERE u.`email` = '". $email ."'";
+        $execute = conexao::toConnect()->executeS($sql);
+        if (count($execute) > 0) {
+            return $execute;
+        }else{
+            return false;
+        }
+    }
 }

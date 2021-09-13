@@ -206,4 +206,9 @@ class Usuario extends ModelUsuario
             exit('2');
         }
     }
+
+    public function verificaUsuarioTransferencia($email)
+    {
+        return parent::verificaUsuarioTransferencia($email);
+    }
 }

@@ -137,6 +137,7 @@ span.erro span:before{
 .navbar-horizontal .navbar-nav .nav-link .nav-link-inner--text{font-family: 'Montserrat-Bold';font-size: 14px}
 p.texto{font-family: 'Roboto-Regular';font-size: 14px}
 .navbar-vertical.navbar-expand-md .navbar-nav .nav-link{font-weight: bold;}
+.icon-shape{background-color: #000;}
 .icon-shape.acesso{background-position: 9px -115px;}
 .icon-shape.empresa{background-position: -75px -114px;}
 .icon-shape.produtos{background-position: -167px -114px;}

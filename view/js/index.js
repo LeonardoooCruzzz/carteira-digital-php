@@ -41,7 +41,6 @@ $(document).ready(function () {
                             senha: form.find('input#senha').val()
                         },
                         success: function (resposta) {
-                            console.log(resposta.retorno);
                             if (resposta.retorno == true) {
                                 window.location.href = url_padrao + '/home'
                             } else if (resposta == 2) {

@@ -1,4 +1,7 @@
 <?php
+if ($_SESSION['tipo_pessoa'] == 'J') {
+    header('Location: ' . URL_SITE .'/transferencias-lista');
+}
 $page_id = 'transferencias';
 $page_url = 'transferencias';
 $table = 'transferencias';
@@ -15,7 +18,7 @@ if ($registro != ''){
     $produtos = $gets->listaProdutosPedidos($registro);
 }
 $case_css = array();
-$case_js = array('jquery.mask.js');
+$case_js = array('jquery.mask.js','maskmoney');
 include_once('view/header.phtml');
 ?>
 <div class="main-content">
@@ -44,11 +47,39 @@ include_once('view/header.phtml');
                         </div>
                     </div>
                     <div class="card-body">
-                        <form id="form_adm" method="post" enctype="multipart/form-data">
+                        <form id="form_transferir" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="acao" id="acao" value="<?php echo  ($registro != '') ? 'alterar' : 'incluir'?>" />
-                            <h6 class="heading-small text-muted mb-4"></h6>
+                            <input type="hidden" name="id_usuario" id="id_usuario" value="<?php echo $_SESSION['id_registro']?>" />
+                            <h6 class="heading-small text-muted mb-4">Digite abaixo as informações da conta que deseja fazer a transferência</h6>
                             <div class="row">
-
+                                <div class="col-xl-3">
+                                    <div class="form-group focused">
+                                        <label class="form-control-label" for="cpf_cnpj">CPF/CNPJ</label>
+                                        <input type="text" name="cpf_cnpj" id="cpf_cnpj"
+                                               class="form-control form-control-alternative">
+                                    </div>
+                                </div>
+                                <div class="col-xl-4">
+                                    <div class="form-group focused">
+                                        <label class="form-control-label" for="email">E-mail</label>
+                                        <input type="email" name="email" id="email"
+                                               class="form-control form-control-alternative">
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="heading-small text-muted mb-4">Digite abaixo o valor que deseja transferir</h6>
+                            <div class="row">
+                                <div class="col-xl-3">
+                                    <div class="form-group focused">
+                                        <label class="form-control-label" for="valor">Valor</label>
+                                        <input type="text" name="valor" id="valor" class="form-control form-control-alternative">
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-success mt-4">Salvar</button>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -59,11 +90,121 @@ include_once('view/header.phtml');
     include_once('view/footer.phtml');
     ?>
         <script type="text/javascript">
-            $('#imprimir').on('click', function () {
-               var conteudo = document.getElementById('imprimir_pedido').innerHTML,
-                   imprimir = window.open('');
-               imprimir.document.write(conteudo);
-               imprimir.window.print();
-               imprimir.window.close();
+            $(document).ready(function () {
+                $("input#valor").maskMoney({
+                    prefix: 'R$ ',
+                    allowNegative: true,
+                    thousands: '.',
+                    decimal: ',',
+                    affixesStay: false
+                });
+
+                $('form#form_transferir').submit(function (event) {
+                    var form = $(this);
+                    if (!validaFormulario($("form#form_transferir").selector)) {
+                        event.preventDefault();
+                    } else {
+                        $('#carregar').addClass('ativo');
+                        $('body').addClass('overflow');
+                        window.setTimeout(function () {
+                            $.ajax({
+                                url: window.location.href,
+                                method: "POST",
+                                dataType: "json",
+                                data: {
+                                    acao: 'incluir',
+                                    id_usuario: $('input#id_usuario').val(),
+                                    email: $('input#email').val(),
+                                    cpf_cnpj: $('input#cpf_cnpj').val(),
+                                    valor: $('input#valor').val()
+                                },
+                                success: function (resposta) {
+                                    $('#carregar').removeClass('ativo');
+                                    if(resposta.saldo == false) {
+                                        $('#form_mensagem div.mensagem').removeClass('success');
+                                        $('#form_mensagem div.mensagem').addClass('error');
+                                        $('#form_mensagem').addClass('ativo');
+                                        $("#form_mensagem div.mensagem span.mensagem").html('Não foi possível transferir, valor maior que saldo em conta.');
+                                        $("#form_mensagem div.mensagem span.button").html('digitar outro <br />valor');
+                                    } else {
+                                        if(resposta.retorno == true){
+                                            $('#form_mensagem').addClass('ativo');
+                                            $('#form_mensagem div.mensagem').removeClass('error');
+                                            $('#form_mensagem div.mensagem').addClass('success');
+                                            $("#form_mensagem div.mensagem span.mensagem").html('Transferência realizada com sucesso.')
+                                            $('#form_mensagem div.mensagem span.button').addClass('limpar');
+                                            $("#form_mensagem div.mensagem span.button").html('Ocultar');
+                                            $("#valor_atualizado").text('R$ ' + resposta.saldoAtualizado);
+                                        } else if(resposta.retorno == false){
+                                            $('#form_mensagem div.mensagem').removeClass('success');
+                                            $('#form_mensagem div.mensagem').addClass('error');
+                                            $('#form_mensagem').addClass('ativo');
+                                            $("#form_mensagem div.mensagem span.mensagem").html('Não foi possível transferir.');
+                                            $("#form_mensagem div.mensagem span.button").html('Tente<br />novamente');
+                                        }
+                                    }
+                                },
+                                error: function () {
+                                    $('#form_mensagem div.mensagem').removeClass('success');
+                                    $('#form_mensagem div.mensagem').addClass('error');
+                                    $('#form_mensagem').addClass('ativo');
+                                    $("#form_mensagem div.mensagem span.mensagem").html('Não foi possível transferir.');
+                                    $("#form_mensagem div.mensagem span.button").html('Tente<br />novamente');
+                                }
+                            });
+                        }, 1000);
+                        return false;
+                    }
+                });
+
+                $("input#valor").on("focusout", function () {
+                    var item = $(this);
+                    var valor = $(this).val().replace("R$ ", "");
+                    if(valor.trim() != '') {
+                        $('#carregar').addClass('ativo');
+                        $('body').addClass('overflow');
+                        window.setTimeout(function () {
+                            $.ajax({
+                                url: window.location.href,
+                                method: "POST",
+                                dataType: "json",
+                                data: {
+                                    acao: 'verificaSaldo',
+                                    id_usuario: $('#id_usuario').val(),
+                                    valor: valor.trim()
+                                },
+                                success: function (resposta) {
+                                    $('#carregar').removeClass('ativo');
+                                    $('body').removeClass('overflow');
+                                    if(resposta.retorno == false) {
+                                        $('#form_mensagem div.mensagem').removeClass('success');
+                                        $('#form_mensagem div.mensagem').addClass('error');
+                                        $('#form_mensagem').addClass('ativo');
+                                        $("#form_mensagem div.mensagem span.mensagem").html('Valor maior que saldo em conta.');
+                                        $("#form_mensagem div.mensagem span.button").html('digitar outro <br />valor');
+                                        item.val('');
+                                    }
+                                },
+                                error: function () {
+                                    $('#carregar').removeClass('ativo');
+                                    $('#form_mensagem div.mensagem').removeClass('success');
+                                    $('#form_mensagem div.mensagem').addClass('error');
+                                    $('#form_mensagem').addClass('ativo');
+                                    $("#form_mensagem div.mensagem span.mensagem").html('Não foi possível localizar saldo em conta.');
+                                    $("#form_mensagem div.mensagem span.button").html('tente <br />novamente');
+                                    item.val('');
+                                }
+                            });
+                        }, 1000);
+                    }
+                });
+
+                var options = {
+                    onKeyPress: function (cpf, ev, el, op) {
+                        var masks = ['000.000.000-000', '00.000.000/0000-00'];
+                        $('#cpf_cnpj').mask((cpf.length > 14) ? masks[1] : masks[0], op);
+                    }
+                }
+                $('#cpf_cnpj').length > 11 ? $('#cpf_cnpj').mask('00.000.000/0000-00', options) : $('#cpf_cnpj').mask('000.000.000-00#', options);
             });
         </script>

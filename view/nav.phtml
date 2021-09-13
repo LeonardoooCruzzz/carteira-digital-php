@@ -57,11 +57,33 @@
                                     <span class="h2 font-weight-bold mb-0">0</span>
                                 </div>
                                 <div class="col-auto">
-                                    <div class="icon icon-shape bg-info text-white rounded-circle shadow vendas"></div>
+                                    <div class="icon icon-shape text-white rounded-circle shadow acesso"></div>
                                 </div>
                             </div>
                             <p class="mt-3 mb-0 text-muted text-sm">
                                 <span class="text-nowrap">Quantidade de Transferências feitas</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <?php
+                $dinheiro = new Dinheiro();
+                $saldo = $dinheiro->saldoAtualizado($_SESSION['id_registro']);
+                ?>
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card card-stats mb-4 mb-xl-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Saldo</h5>
+                                    <span class="h2 font-weight-bold mb-0" id="valor_atualizado"><?php echo 'R$ '.number_format($saldo[0]->valor,2,",",".")?></span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape  text-white rounded-circle shadow empresa"></div>
+                                </div>
+                            </div>
+                            <p class="mt-3 mb-0 text-muted text-sm">
+                                <span class="text-nowrap">Saldo em conta atualizado.</span>
                             </p>
                         </div>
                     </div>

@@ -28,10 +28,12 @@ include_once('view/header.phtml');
                         <div class="col-8">
                             <h3 class="mb-0"><?php echo $page_nome?></h3>
                         </div>
+                        <?php if ($_SESSION['tipo_pessoa'] != 'J') {?>
                         <div class="col-4 text-right">
                             <a href="<?php echo URL_SITE . '/' . $url_destino . '-form' ?>"
                                class="btn btn-sm btn-primary">Adicionar</a>
                         </div>
+                        <?php }?>
                     </div>
                 </div>
                 <div class="table-responsive">
