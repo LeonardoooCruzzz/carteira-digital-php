@@ -77,7 +77,7 @@ include_once('view/header.phtml');
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-success mt-4">Salvar</button>
+                                        <button type="submit" class="btn btn-success mt-4 disable">Salvar</button>
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +106,6 @@ include_once('view/header.phtml');
                     } else {
                         $('#carregar').addClass('ativo');
                         $('body').addClass('overflow');
-                        window.setTimeout(function () {
                             $.ajax({
                                 url: window.location.href,
                                 method: "POST",
@@ -131,10 +130,17 @@ include_once('view/header.phtml');
                                             $('#form_mensagem').addClass('ativo');
                                             $('#form_mensagem div.mensagem').removeClass('error');
                                             $('#form_mensagem div.mensagem').addClass('success');
-                                            $("#form_mensagem div.mensagem span.mensagem").html('Transferência realizada com sucesso.')
+                                            if(resposta.emailEnvio) {
+                                                $("#form_mensagem div.mensagem span.mensagem").html('Transferência realizada com sucesso. Enviamos um e-mail para deixar registrado.');
+                                            } else {
+                                                $("#form_mensagem div.mensagem span.mensagem").html('Transferência realizada com sucesso.');
+                                            }
                                             $('#form_mensagem div.mensagem span.button').addClass('limpar');
                                             $("#form_mensagem div.mensagem span.button").html('Ocultar');
+                                            $('form#form_transferir button').addClass('disable');
                                             $("#valor_atualizado").text('R$ ' + resposta.saldoAtualizado);
+                                            var qtdAtual = $("#count_transferencia").text();
+                                            $("#count_transferencia").text(parseInt(qtdAtual) + 1);
                                         } else if(resposta.retorno == false){
                                             $('#form_mensagem div.mensagem').removeClass('success');
                                             $('#form_mensagem div.mensagem').addClass('error');
@@ -152,12 +158,11 @@ include_once('view/header.phtml');
                                     $("#form_mensagem div.mensagem span.button").html('Tente<br />novamente');
                                 }
                             });
-                        }, 1000);
                         return false;
                     }
                 });
 
-                $("input#valor").on("focusout", function () {
+                $("input#valor").on("blur", function () {
                     var item = $(this);
                     var valor = $(this).val().replace("R$ ", "");
                     if(valor.trim() != '') {
@@ -183,6 +188,8 @@ include_once('view/header.phtml');
                                         $("#form_mensagem div.mensagem span.mensagem").html('Valor maior que saldo em conta.');
                                         $("#form_mensagem div.mensagem span.button").html('digitar outro <br />valor');
                                         item.val('');
+                                    } else {
+                                        $('form#form_transferir button').removeClass('disable');
                                     }
                                 },
                                 error: function () {

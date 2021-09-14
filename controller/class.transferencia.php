@@ -35,9 +35,9 @@ class Transferencia extends ModelTransferencia
         }
     }
 
-    public function getListagem()
+    public function getListagem($idUsuario)
     {
-        return parent::getListagem();
+        return parent::getListagem($idUsuario);
     }
 
     public  function buscaRegistro($id)
@@ -65,53 +65,75 @@ class Transferencia extends ModelTransferencia
             if($usuarioRecebe) {
 
                 if($usuarioRecebe[0]->identificacao == $this->get_registro('cpf_cnpj')) {
+                    //consultar serviço para autorizar transferência
+                    $retornoApiAutorizador = $this->api('https://run.mocky.io/v3/8fafdd68-a090-496f-8c9a-3442cf30dae6');
 
-                    //inclui tranferencia
-                    date_default_timezone_set('America/Sao_Paulo');
-                    $this->setData_hora(date('Y-m-d H:i:s'));
-                    $this->setId_usuario_envia($this->get_registro('id_usuario'));
-                    $this->setId_usuario_recebe($usuarioRecebe[0]->id_usuario);
-                    $this->setValor($formatarMoeda);
-                    $this->setStatus('C');
+                    if (isset($retornoApiAutorizador->message) && $retornoApiAutorizador->message == 'Autorizado') {
 
-                    $idInserido = parent::incluir();
+                        //inclui tranferencia
+                        date_default_timezone_set('America/Sao_Paulo');
+                        $this->setData_hora(date('Y-m-d H:i:s'));
+                        $this->setId_usuario_envia($this->get_registro('id_usuario'));
+                        $this->setId_usuario_recebe($usuarioRecebe[0]->id_usuario);
+                        $this->setValor($formatarMoeda);
+                        $this->setStatus('C');
 
-                    if($idInserido) {
-                        $atualizaValorEnvia = $saldo[0]->valor - $formatarMoeda;
-                        //atualiza saldo de quem enviou
-                        $atualizaValorEnviaRetorno = $dinheiro->updateDinheiro($this->get_registro('id_usuario'),$atualizaValorEnvia);
-                        if($atualizaValorEnviaRetorno) {
-                            $atualizaValorRecebe =  $usuarioRecebe[0]->valor + $formatarMoeda;
-                            //atualiza saldo de quem recebe
-                            $atualizaValorEnviaRecebe = $dinheiro->updateDinheiro($usuarioRecebe[0]->id_usuario,$atualizaValorRecebe);
-                            if($atualizaValorEnviaRecebe) {
-                                $retorno = array(
-                                    'saldo' => true,
-                                    'retorno' => true,
-                                    'saldoAtualizado' => str_replace('.', ',', str_replace(',', '', $atualizaValorEnvia)),
-                                );
-                                return $retorno;
-                            } else {
-                                //volta valor antes de ter atualizado de quem enviou
-                                $dinheiro->updateDinheiro($this->get_registro('id_usuario'),$saldo[0]->valor);
-                                parent::deletar($idInserido,'transferencias');
+                        $idInserido = parent::incluir();
+
+                        if ($idInserido) {
+                            $atualizaValorEnvia = $saldo[0]->valor - $formatarMoeda;
+                            //atualiza saldo de quem enviou
+                            $atualizaValorEnviaRetorno = $dinheiro->updateDinheiro($this->get_registro('id_usuario'), $atualizaValorEnvia);
+                            if ($atualizaValorEnviaRetorno) {
+                                $atualizaValorRecebe = $usuarioRecebe[0]->valor + $formatarMoeda;
+                                //atualiza saldo de quem recebe
+                                $atualizaValorEnviaRecebe = $dinheiro->updateDinheiro($usuarioRecebe[0]->id_usuario, $atualizaValorRecebe);
+                                if ($atualizaValorEnviaRecebe) {
+                                    //envia e-mail para o usuário
+                                    $retornoApiEnvioEmail = $this->api('http://o4d9z.mocklab.io/notify');
+                                    if($retornoApiEnvioEmail->message == 'Success') {
+                                        $retorno = array(
+                                            'saldo' => true,
+                                            'retorno' => true,
+                                            'emailEnvio' => true,
+                                            'saldoAtualizado' => str_replace('.', ',', str_replace(',', '', $atualizaValorEnvia)),
+                                        );
+                                        return $retorno;
+                                    } else {
+                                        $retorno = array(
+                                            'saldo' => true,
+                                            'retorno' => true,
+                                            'saldoAtualizado' => str_replace('.', ',', str_replace(',', '', $atualizaValorEnvia)),
+                                        );
+                                        return $retorno;
+                                    }
+                                } else {
+                                    //volta valor antes de ter atualizado de quem enviou
+                                    $dinheiro->updateDinheiro($this->get_registro('id_usuario'), $saldo[0]->valor);
+                                    parent::deletar($idInserido, 'transferencias');
+                                    $retorno = array(
+                                        'saldo' => true,
+                                        'retorno' => false,
+                                    );
+                                    return $retorno;
+                                }
+                            } //caso algo de errado apaga transferencia;
+                            else {
+                                parent::deletar($idInserido, 'transferencias');
                                 $retorno = array(
                                     'saldo' => true,
                                     'retorno' => false,
                                 );
                                 return $retorno;
                             }
-                        }
-                        //caso algo de errado apaga transferencia;
-                        else{
-                            parent::deletar($idInserido,'transferencias');
+                        } else {
                             $retorno = array(
                                 'saldo' => true,
                                 'retorno' => false,
                             );
                             return $retorno;
                         }
-                    } else{
+                    } else {
                         $retorno = array(
                             'saldo' => true,
                             'retorno' => false,
@@ -139,5 +161,23 @@ class Transferencia extends ModelTransferencia
             );
             return $retorno;
         }
+    }
+
+    public function api($url){
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded; charset=UTF-8'));
+        $xml= curl_exec($curl);
+        curl_close($curl);
+        $xml_json = json_decode($xml);
+        return $xml_json;
+    }
+
+    public function getCountTranferencia($idUsuario)
+    {
+        return parent::getCountTranferencia($idUsuario);
     }
 }

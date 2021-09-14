@@ -5,13 +5,14 @@ $table = 'transferencias';
 $page_nome = 'Transferências';
 $url_destino = 'transferencias';
 $lista_r = new Transferencia(true);
-$lista = $lista_r->getListagem();
+$lista = $lista_r->getListagem($_SESSION['id_registro']);
 $case_css = array('datatables.min.css', 'fontawesome.min.css');
 $case_js = array('datatables.min.js', 'fontawesome.min.js');
 
 $array_nomes = array(
     'Data e Hora',
     'Enviado por',
+    'Recebida por',
     'Valor',
     'STATUS'
 );
@@ -45,20 +46,18 @@ include_once('view/header.phtml');
                                 <?php foreach ($array_nomes as $n_m){?>
                                     <th scope="th-sm"><?php echo $n_m?></th>
                                 <?php }?>
-                                <th scope="th-sm">Editar</th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php
                             if ($lista) {
-                                foreach ($lista as $u_s) {
-
-                                    ?>
+                                foreach ($lista as $u_s) {?>
                                     <tr>
                                         <td><?php echo $u_s->data_hora ?></td>
-                                        <td><?php echo $u_s->nome ?></td>
-                                        <td><?php echo $u_s->telefone ?></td>
-                                        <td><?php echo $u_s->cep ?></td>
+                                        <td><?php echo utf8_encode($u_s->usuario_envia) ?></td>
+                                        <td><?php echo utf8_encode($u_s->usuario_recebe) ?></td>
+                                        <td><?php echo ($u_s->id_usuario_envia == $_SESSION['id_registro']) ? '-R$ ' . number_format($u_s->valor,2,",",".") : '+R$ ' . number_format($u_s->valor,2,",","."); ?></td>
+                                        <td><?php echo ($u_s->status == 'C') ? 'Concluído' : 'Recusada' ?></td>
                                     </tr>
                                 <?php }
                             }else{?>

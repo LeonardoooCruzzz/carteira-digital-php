@@ -43,7 +43,7 @@ $(document).ready(function () {
                         success: function (resposta) {
                             if (resposta.retorno == true) {
                                 window.location.href = url_padrao + '/home'
-                            } else if (resposta == 2) {
+                            } else if (resposta.retorno == false) {
                                 $('#carregar').removeClass('ativo');
                                 $('#form_mensagem div.mensagem').removeClass('success');
                                 $('#form_mensagem div.mensagem').addClass('error');
@@ -175,7 +175,7 @@ $(document).ready(function () {
         $('#form_mensagem').removeClass('ativo');
         $('body').removeClass('overflow');
         if($(this).hasClass('limpar')) {
-            $('form#cadastro input,form#cadastro select').val('');
+            $('form input[type="text"],form input[type="tel"],form input[type="email"],form select').val('');
             if(id_registro == 'cadastro') {
                 $('input#cpf').parent().parent().removeClass('null');
                 $('input#cpf').removeClass('opcional');

@@ -22,7 +22,7 @@
                         session_start();
                         ?>
                         <div class="media-body ml-2 d-none d-lg-block">
-                            <span class="mb-0 text-sm  font-weight-bold"><?php echo $saudacao .' | '.$_SESSION['login']?></span>
+                            <span class="mb-0 text-sm  font-weight-bold"><?php echo $saudacao .' | '.utf8_encode($_SESSION['login'])?></span>
                         </div>
                     </div>
                 </a>
@@ -48,13 +48,18 @@
     <div class="container-fluid">
         <div class="header-body">
             <div class="row">
+                <?php
+                if ($_SESSION['tipo_pessoa'] != 'J') {
+                $transferencia = new Transferencia();
+                $count = $transferencia->getCountTranferencia($_SESSION['id_registro']);
+                ?>
                 <div class="col-xl-3 col-lg-6">
                     <div class="card card-stats mb-4 mb-xl-0">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Transferências</h5>
-                                    <span class="h2 font-weight-bold mb-0">0</span>
+                                    <span class="h2 font-weight-bold mb-0" id="count_transferencia"><?php echo ($count ? count($count) : '0')?></span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape text-white rounded-circle shadow acesso"></div>
@@ -67,6 +72,7 @@
                     </div>
                 </div>
                 <?php
+                }
                 $dinheiro = new Dinheiro();
                 $saldo = $dinheiro->saldoAtualizado($_SESSION['id_registro']);
                 ?>

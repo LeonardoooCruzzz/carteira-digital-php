@@ -276,6 +276,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item.active .
 }
 .redireciona .link:hover{opacity: .7;}
 #login h1, #cadastro h1{margin-bottom: 50px;}
+.disable{opacity: .5}
 @media (max-width: 1024px) {
     .desktop_view{display: none!important;}
     .mobile_view{display: block!important;}

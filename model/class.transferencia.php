@@ -19,8 +19,22 @@ class ModelTransferencia extends sets
 
     /*
      * author: Leonardo Cruz*/
-    protected function getListagem(){
-        $sql = "SELECT * FROM ".$this->table." ORDER BY ".$this->id_table." DESC";
+    protected function getListagem($idUsuario){
+        $sql = "SELECT DISTINCT t.*,(SELECT u.nome FROM usuarios u WHERE u.id_usuario = t.id_usuario_envia) AS 'usuario_envia',
+        (SELECT u.nome FROM usuarios u WHERE u.id_usuario = t.id_usuario_recebe) AS 'usuario_recebe' FROM `".$this->table."` t 
+        WHERE t.`id_usuario_envia` = ".$idUsuario." OR t.`id_usuario_recebe` = ".$idUsuario." ORDER BY t.`data_hora` DESC";
+        $execute = conexao::toConnect()->executeS($sql);
+        if (count($execute) > 0) {
+            return $execute;
+        }else{
+            return false;
+        }
+    }
+
+    /*
+     * author: Leonardo Cruz*/
+    protected function getCountTranferencia($idUsuario){
+        $sql = "SELECT DISTINCT t.* FROM `".$this->table."` t WHERE t.`id_usuario_envia` = ".$idUsuario." ORDER BY t.`data_hora` DESC";
         $execute = conexao::toConnect()->executeS($sql);
         if (count($execute) > 0) {
             return $execute;
